@@ -14,8 +14,12 @@ RUN npm install --production
 # Bundle app source
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 4000
+# Compile TypeScript to JavaScript
+RUN npm run build
+
+# Expose port
+EXPOSE ${API_GATEWAY_PORT}
 
 # Start the application
 CMD ["npm", "start"]
+
