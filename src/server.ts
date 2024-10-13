@@ -7,7 +7,6 @@ dotenv.config();
 
 const app = express();
 
-// Logger for HTTP requests
 app.use(morgan("dev"));
 
 // Helper function to configure API proxy with error handling
@@ -37,17 +36,14 @@ const apiProxy = (path: string, target: string | undefined): void => {
 };
 
 // Routes and their target services
-apiProxy("/api/prescriptions", process.env.PRESCRIPTION_SERVICE_URL);
-// apiProxy("/api/auth", process.env.AUTH_SERVICE_URL);
-// apiProxy("/api/fulfillment", process.env.FULFILLMENT_SERVICE_URL);
-// apiProxy("/api/delivery", process.env.DELIVERY_SERVICE_URL);
+apiProxy("/api/prescriptionService/", process.env.PRESCRIPTION_SERVICE_URL);
+apiProxy("/api/authService/", process.env.AUTH_SERVICE_URL);
 
 // Health check endpoint
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({ status: "API Gateway is running." });
 });
 
-// Start the server
 const API_GATEWAY_PORT = process.env.API_GATEWAY_PORT;
 app.listen(API_GATEWAY_PORT, () => {
   console.log(`API Gateway is running on port ${API_GATEWAY_PORT}`);
